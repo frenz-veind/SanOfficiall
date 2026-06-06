@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YanzKhenz Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --card: #1a1f2e;
+    --card2: #1e2433;
+    --border: #2a3040;
+    --accent: #4da6ff;
+    --accent2: #7c5cfc;
+    --green: #3dd68c;
+    --red: #ff6b6b;
+    --gold: #f5a623;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #6e7681;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px 12px;
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 17px; font-weight: 700; color: var(--text);
+  }
+  .brand-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .order-badge {
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: white;
+    font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 22px 18px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(77,166,255,0.1);
+    border: 1px solid rgba(77,166,255,0.25);
+    color: var(--accent);
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+    letter-spacing: 0.5px; margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .hero-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero h1 { font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 6px; }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: var(--text2); font-size: 13px; line-height: 1.6; }
+
+  /* TABS */
+  .tabs-wrap {
+    padding: 14px 18px 0;
+    position: sticky; top: 57px; z-index: 99;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .tabs {
+    display: flex; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    padding-bottom: 0;
+  }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 14px 10px;
+    font-size: 13px; font-weight: 500;
+    color: var(--text2);
+    border-bottom: 2px solid transparent;
+    cursor: pointer; transition: all .2s;
+    white-space: nowrap;
+    background: none; border-top: none; border-left: none; border-right: none;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+  /* SUBTABS (VPS) */
+  .subtabs {
+    display: flex; gap: 8px;
+    padding: 14px 18px 4px;
+  }
+  .subtab {
+    padding: 5px 14px;
+    font-size: 12px; font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer; transition: all .2s;
+    border: 1px solid var(--border);
+    color: var(--text2); background: transparent;
+  }
+  .subtab.active {
+    background: rgba(77,166,255,0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    padding: 18px 18px 4px;
+    display: flex; align-items: baseline; justify-content: space-between;
+  }
+  .section-header h2 { font-size: 16px; font-weight: 700; color: var(--text); }
+  .section-header span { font-size: 12px; color: var(--text3); }
+
+  /* PRODUCT LIST (card style like screenshot) */
+  .product-list { padding: 8px 18px 0; }
+
+  .pcard {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pcard::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    opacity:0; transition:.2s;
+  }
+  .pcard:hover { border-color: rgba(77,166,255,0.4); background: var(--card2); }
+  .pcard:hover::before { opacity:1; }
+  .pcard.active {
+    border-color: var(--accent);
+    background: var(--card2);
+    box-shadow: 0 0 0 1px rgba(77,166,255,0.2), 0 4px 20px rgba(77,166,255,0.1);
+  }
+  .pcard.active::before { opacity:1; }
+
+  .pcard-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .pcard-badge {
+    display: inline-block;
+    background: rgba(124,92,252,0.15);
+    border: 1px solid rgba(124,92,252,0.3);
+    color: #a78bfa;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 9px; border-radius: 20px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .pcard-badge.trial {
+    background: rgba(245,166,35,0.12);
+    border-color: rgba(245,166,35,0.3);
+    color: var(--gold);
+  }
+  .pcard-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .pcard-price {
+    font-size: 17px; font-weight: 800;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .pcard-price small { font-size: 11px; color: var(--text3); font-weight: 400; }
+
+  .pcard-specs { margin-top: 6px; }
+  .pcard-spec-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text2);
+    margin-bottom: 3px;
+  }
+  .pcard-spec-item::before {
+    content: '›'; color: var(--accent); font-size: 14px; font-weight: 700;
+  }
+
+  .pcard-select-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 10px;
+    background: rgba(77,166,255,0.08);
+    border: 1px solid rgba(77,166,255,0.25);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .2s;
+    display: none;
+  }
+  .pcard.active .pcard-select-btn { display: block; }
+  .pcard-select-btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* SECTION */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp .25s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ORDER DRAWER */
+  .order-drawer {
+    display: none;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 20px 18px;
+    margin-top: 16px;
+  }
+  .order-drawer.open { display: block; animation: fadeUp .25s ease; }
+  .drawer-title {
+    font-size: 15px; font-weight: 700; color: var(--text);
+    margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+  }
+  .drawer-subtitle { font-size: 12px; color: var(--text2); margin-bottom: 18px; }
+
+  /* SELECTED PRODUCT CHIP */
+  .selected-chip {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(77,166,255,0.06);
+    border: 1px solid rgba(77,166,255,0.2);
+    border-radius: 10px; padding: 10px 14px;
+    margin-bottom: 16px;
+  }
+  .chip-left { font-size: 13px; font-weight: 600; color: var(--text); }
+  .chip-right { font-size: 14px; font-weight: 700; color: var(--accent); }
+
+  /* FORM */
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+    color: var(--text2); margin-bottom: 6px; text-transform: uppercase;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; outline: none;
+    transition: border-color .2s;
+  }
+  .field input:focus, .field textarea:focus { border-color: var(--accent); }
+  .field textarea { resize: none; }
+
+  /* PAYMENT BOX */
+  .pay-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px 0;
+  }
+  .pay-box-head {
+    background: rgba(77,166,255,0.06);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .pay-box-head span { font-size: 12px; color: var(--text2); font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .pay-box-head strong { font-size: 18px; font-weight: 800; color: var(--accent); }
+  .pay-box-body { padding: 16px; text-align: center; }
+  .qr-img { width: 160px; height: 160px; border-radius: 10px; border: 2px solid var(--border); background: white; padding: 6px; object-fit: contain; }
+  .qr-empty { width: 160px; height: 160px; border-radius: 10px; border: 2px dashed var(--border); display:flex;align-items:center;justify-content:center; color:var(--text3); font-size:12px; text-align:center; margin: 0 auto 12px; }
+  .dana-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 12px 0 6px; }
+  .dana-num { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+  .copy-btn {
+    background: rgba(77,166,255,0.1); border: 1px solid rgba(77,166,255,0.3);
+    color: var(--accent); font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 6px; cursor: pointer; transition: all .2s;
+  }
+  .copy-btn:hover { background: var(--accent); color: var(--bg); }
+  .dana-name-label { font-size: 12px; color: var(--text3); margin-bottom: 4px; }
+
+  /* ALERT */
+  .alert-box {
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 10px; padding: 12px 14px;
+    font-size: 13px; color: var(--text2); line-height: 1.7;
+  }
+  .alert-box strong { color: var(--gold); }
+
+  /* BUTTONS */
+  .btn-main {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border: none; border-radius: 10px;
+    color: white; font-size: 14px; font-weight: 700;
+    letter-spacing: 0.5px; cursor: pointer;
+    transition: all .25s; margin-top: 12px;
+  }
+  .btn-main:hover { opacity: .9; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(77,166,255,0.3); }
+  .btn-tele {
+    width: 100%; padding: 13px;
+    background: #0088cc;
+    border: none; border-radius: 10px;
+    color: white; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all .25s; margin-top: 8px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    text-decoration: none;
+  }
+  .btn-tele:hover { background: #007ab8; }
+  .btn-outline {
+    width: 100%; padding: 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text2); font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .2s; margin-top: 8px;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SUCCESS */
+  .success-wrap {
+    display: none; padding: 40px 18px;
+    text-align: center;
+  }
+  .success-wrap.open { display: block; animation: fadeUp .3s ease; }
+  .success-icon { font-size: 56px; margin-bottom: 16px; }
+  .success-title { font-size: 20px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 24px; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 24px 18px; border-top: 1px solid var(--border); color: var(--text3); font-size: 12px; margin-top: 20px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #2ea043; color: white;
+    padding: 10px 22px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    z-index: 9999; opacity: 0; transition: opacity .3s;
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-icon">⚡</div>
+    YanzKhenz Web
+  </div>
+  <div class="order-badge">Auto Order</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">
+    <div class="hero-dot"></div>
+    Online 24/7
+  </div>
+  <h1>Pilih <span>Produk</span></h1>
+  <p>Pilih produk yang ingin kamu order, lalu isi form di bawah.</p>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('vps',this)">🖥️ VPS</button>
+    <button class="tab" onclick="switchTab('panel',this)">📊 Panel Legal</button>
+    <button class="tab" onclick="switchTab('sc',this)">⚙️ SC Auto Order</button>
+    <button class="tab" onclick="switchTab('apk',this)">📱 APK Bug</button>
+  </div>
+</div>
+
+<!-- ===== VPS ===== -->
+<div class="section active" id="sec-vps">
+  <div class="subtabs">
+    <button class="subtab active" onclick="switchVps('legal',this)">✅ VPS Legal</button>
+    <button class="subtab" onclick="switchVps('trial',this)">🔰 VPS Trial</button>
+  </div>
+
+  <div id="vps-legal-wrap">
+    <div class="section-header">
+      <h2>VPS Legal</h2>
+      <span id="count-vpslegal">0 paket</span>
+    </div>
+    <div class="product-list" id="list-vpslegal"></div>
+  </div>
+
+  <div id="vps-trial-wrap" style="display:none">
+    <div class="section-header">
+      <h2>VPS Trial</h2>
+      <span id="count-vpstrial">0 paket</span>
+    </div>
+    <div class="product-list" id="list-vpstrial"></div>
+  </div>
+
+  <div class="order-drawer" id="drawer-vps">
+    <div class="drawer-title">📋 Form Order</div>
+    <div class="drawer-subtitle">Lengkapi data di bawah untuk memproses order</div>
+    <div class="selected-chip">
+      <div class="chip-left" id="chip-vps-name">-</div>
+      <div class="chip-right" id="chip-vps-price">Rp 0</div>
+    </div>
+    <div class="field"><label>Nama Lengkap</label><input type="text" id="vps-name" placeholder="Masukkan nama kamu..."></div>
+    <div class="field"><label>Username Telegram</label><input type="text" id="vps-tele" placeholder="@username"></div>
+    <div class="field"><label>Nomor WhatsApp</label><input type="text" id="vps-wa" placeholder="08xxxxxxxxxx"></div>
+    <div class="field"><label>Catatan (Opsional)</label><textarea id="vps-note" rows="2" placeholder="OS yang diinginkan, dll..."></textarea></div>
+    <div class="pay-box">
+      <div class="pay-box-head"><span>Total Bayar</span><strong id="pay-vps-total">Rp 0</strong></div>
+      <div class="pay-box-body">
+        <div id="qr-vps-wrap"></div>
+        <div class="dana-row">
+          <span class="dana-num" id="dana-vps-num">-</span>
+          <button class="copy-btn" onclick="copyDana()">Copy</button>
+        </div>
+        <div class="dana-name-label" id="dana-vps-name">-</div>
+      </div>
+    </div>
+    <div class="alert-box">
+      <strong>⚠️ Perhatian!</strong> Setelah transfer, kirim SS bukti TF ke owner:<br>
+      <strong>👉 t.me/yanzkhen</strong><br>
+      Lalu tekan tombol <strong>Selesai</strong> di bawah.
+    </div>
+    <button class="btn-main" onclick="submitOrder('vps')">🛒 Proses Order</button>
+  </div>
+</div>
+
+<!-- ===== PANEL ===== -->
+<div class="section" id="sec-panel">
+  <div class="section-header">
+    <h2>Panel Legal</h2>
+    <span id="count-panel">0 paket</span>
+  </div>
+  <div class="product-list" id="list-panel"></div>
+  <div class="order-drawer" id="drawer-panel">
+    <div class="drawer-title">📋 Form Order Panel</div>
+    <div class="drawer-subtitle">Lengkapi data di bawah</div>
+    <div class="selected-chip">
+      <div class="chip-left" id="chip-panel-name">-</div>
+      <div class="chip-right" id="chip-panel-price">Rp 0</div>
+    </div>
+    <div class="field"><label>Nama Lengkap</label><input type="text" id="panel-name" placeholder="Masukkan nama kamu..."></div>
+    <div class="field"><label>Username Telegram</label><input type="text" id="panel-tele" placeholder="@username"></div>
+    <div class="field"><label>Nomor WhatsApp</label><input type="text" id="panel-wa" placeholder="08xxxxxxxxxx"></div>
+    <div class="field"><label>Domain (opsional)</label><input type="text" id="panel-domain" placeholder="contoh.com"></div>
+    <div class="pay-box">
+      <div class="pay-box-head"><span>Total Bayar</span><strong id="pay-panel-total">Rp 0</strong></div>
+      <div class="pay-box-body">
+        <div id="qr-panel-wrap"></div>
+        <div class="dana-row"><span class="dana-num" id="dana-panel-num">-</span><button class="copy-btn" onclick="copyDana()">Copy</button></div>
+        <div class="dana-name-label" id="dana-panel-name">-</div>
+      </div>
+    </div>
+    <div class="alert-box"><strong>⚠️ Perhatian!</strong> Setelah transfer, kirim SS bukti TF ke:<br><strong>👉 t.me/yanzkhen</strong><br>Lalu tekan tombol <strong>Selesai</strong>.</div>
+    <button class="btn-main" onclick="submitOrder('panel')">🛒 Proses Order</button>
+  </div>
+</div>
+
+<!-- ===== SC ===== -->
+<div class="section" id="sec-sc">
+  <div class="section-header">
+    <h2>SC Auto Order</h2>
+    <span id="count-sc">0 paket</span>
+  </div>
+  <div class="product-list" id="list-sc"></div>
+  <div class="order-drawer" id="drawer-sc">
+    <div class="drawer-title">📋 Form Order SC</div>
+    <div class="drawer-subtitle">Lengkapi data di bawah</div>
+    <div class="selected-chip">
+      <div class="chip-left" id="chip-sc-name">-</div>
+      <div class="chip-right" id="chip-sc-price">Rp 0</div>
+    </div>
+    <div class="field"><label>Nama Lengkap</label><input type="text" id="sc-name" placeholder="Masukkan nama kamu..."></div>
+    <div class="field"><label>Username Telegram</label><input type="text" id="sc-tele" placeholder="@username"></div>
+    <div class="field"><label>Nomor WhatsApp</label><input type="text" id="sc-wa" placeholder="08xxxxxxxxxx"></div>
+    <div class="field"><label>Keterangan</label><textarea id="sc-note" rows="2" placeholder="Kebutuhan kustom, dll..."></textarea></div>
+    <div class="pay-box">
+      <div class="pay-box-head"><span>Total Bayar</span><strong id="pay-sc-total">Rp 0</strong></div>
+      <div class="pay-box-body">
+        <div id="qr-sc-wrap"></div>
+        <div class="dana-row"><span class="dana-num" id="dana-sc-num">-</span><button class="copy-btn" onclick="copyDana()">Copy</button></div>
+        <div class="dana-name-label" id="dana-sc-name">-</div>
+      </div>
+    </div>
+    <div class="alert-box"><strong>⚠️ Perhatian!</strong> Setelah transfer, kirim SS bukti TF ke:<br><strong>👉 t.me/yanzkhen</strong><br>Lalu tekan tombol <strong>Selesai</strong>.</div>
+    <button class="btn-main" onclick="submitOrder('sc')">🛒 Proses Order</button>
+  </div>
+</div>
+
+<!-- ===== APK ===== -->
+<div class="section" id="sec-apk">
+  <div class="section-header">
+    <h2>APK Bug</h2>
+    <span id="count-apk">0 paket</span>
+  </div>
+  <div class="product-list" id="list-apk"></div>
+  <div class="order-drawer" id="drawer-apk">
+    <div class="drawer-title">📋 Form Order APK</div>
+    <div class="drawer-subtitle">Lengkapi data di bawah</div>
+    <div class="selected-chip">
+      <div class="chip-left" id="chip-apk-name">-</div>
+      <div class="chip-right" id="chip-apk-price">Rp 0</div>
+    </div>
+    <div class="field"><label>Nama Lengkap</label><input type="text" id="apk-name" placeholder="Masukkan nama kamu..."></div>
+    <div class="field"><label>Username Telegram</label><input type="text" id="apk-tele" placeholder="@username"></div>
+    <div class="field"><label>Nomor WhatsApp</label><input type="text" id="apk-wa" placeholder="08xxxxxxxxxx"></div>
+    <div class="pay-box">
+      <div class="pay-box-head"><span>Total Bayar</span><strong id="pay-apk-total">Rp 0</strong></div>
+      <div class="pay-box-body">
+        <div id="qr-apk-wrap"></div>
+        <div class="dana-row"><span class="dana-num" id="dana-apk-num">-</span><button class="copy-btn" onclick="copyDana()">Copy</button></div>
+        <div class="dana-name-label" id="dana-apk-name">-</div>
+      </div>
+    </div>
+    <div class="alert-box"><strong>⚠️ Perhatian!</strong> Setelah transfer, kirim SS bukti TF ke:<br><strong>👉 t.me/yanzkhen</strong><br>Lalu tekan tombol <strong>Selesai</strong>.</div>
+    <button class="btn-main" onclick="submitOrder('apk')">🛒 Proses Order</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-wrap" id="success-screen">
+  <div class="success-icon">✅</div>
+  <div class="success-title">Order Berhasil!</div>
+  <div class="success-sub">
+    Terima kasih sudah order di <strong>YanzKhenz Web</strong>.<br>
+    Kirim SS bukti transfer ke owner, lalu tunggu konfirmasi.
+  </div>
+  <a href="https://t.me/yanzkhen" target="_blank" class="btn-tele">
+    <span>✈️</span> Kirim SS ke Owner — t.me/yanzkhen
+  </a>
+  <button class="btn-outline" onclick="resetAll()">🔄 Order Lagi</button>
+</div>
+
+<footer>© 2024 YanzKhenz Web · All Rights Reserved</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ CONFIG ============
+let CONFIG = {
+  dana_number: '08xxxxxxxxxx',
+  dana_name: 'YanzKhenz',
+  qr_url: '',
+  menus: {
+    vps_legal: [
+      { name:'RAM 2GB 1vCPU', specs:['RAM 2 GB','1 vCPU','SSD NVMe','Bandwidth Unlimited'], price:45000, period:'bulan', badge:'VPS' },
+      { name:'RAM 4GB 2vCPU', specs:['RAM 4 GB','2 vCPU','SSD NVMe','Bandwidth Unlimited'], price:85000, period:'bulan', badge:'VPS' },
+      { name:'RAM 8GB 4vCPU', specs:['RAM 8 GB','4 vCPU','SSD NVMe','Bandwidth Unlimited'], price:125000, period:'bulan', badge:'VPS' },
+      { name:'RAM 16GB 8vCPU', specs:['RAM 16 GB','8 vCPU','SSD NVMe','Bandwidth Unlimited'], price:215000, period:'bulan', badge:'VPS' },
+      { name:'RAM 32GB 8vCPU', specs:['RAM 32 GB','8 vCPU','SSD NVMe','Bandwidth Unlimited'], price:295000, period:'bulan', badge:'VPS' },
+    ],
+    vps_trial: [
+      { name:'VPS Trial 8GB', specs:['RAM 8 GB','4 Core','Trial Edition'], price:13000, period:'periode', badge:'TRIAL', badgeType:'trial' },
+    ],
+    panel: [
+      { name:'Panel 1GB', specs:['Storage 1GB','Unlimited Bandwidth'], price:5000, period:'bulan', badge:'PANEL' },
+      { name:'Panel 2GB', specs:['Storage 2GB','Unlimited Bandwidth'], price:8000, period:'bulan', badge:'PANEL' },
+      { name:'Panel 3GB', specs:['Storage 3GB','Unlimited Bandwidth'], price:13000, period:'bulan', badge:'PANEL' },
+      { name:'Panel 4GB', specs:['Storage 4GB','Unlimited Bandwidth'], price:18000, period:'bulan', badge:'PANEL' },
+      { name:'Panel 5GB', specs:['Storage 5GB','Unlimited Bandwidth'], price:23000, period:'bulan', badge:'PANEL' },
+      { name:'Panel 10GB', specs:['Storage 10GB','Unlimited Bandwidth'], price:43000, period:'bulan', badge:'PANEL' },
+      { name:'Panel 20GB', specs:['Storage 20GB','Unlimited Bandwidth'], price:83000, period:'bulan', badge:'PANEL' },
+    ],
+    sc: [
+      { name:'SC Auto Order AM Premium', specs:['Script auto order AM premium','Siap pakai'], price:10000, period:'lisensi', badge:'SC' },
+      { name:'SC Auto Order Panel', specs:['Script auto order panel hosting','Siap pakai'], price:10000, period:'lisensi', badge:'SC' },
+      { name:'SC Auto Order VPS', specs:['Script auto order VPS','Siap pakai'], price:10000, period:'lisensi', badge:'SC' },
+      { name:'Request SC Auto Order', specs:['Custom script sesuai kebutuhan','Konsultasi gratis'], price:20000, period:'project', badge:'SC' },
+    ],
+    apk: [
+      { name:'APK Bug Premium', specs:['Update terbaru','Siap pakai'], price:15000, period:'unit', badge:'APK' },
+      { name:'APK Bug Pro', specs:['Fitur lengkap','Update terbaru'], price:25000, period:'unit', badge:'APK' },
+    ]
+  }
+};
+
+try { const s = localStorage.getItem('yz_config'); if(s) CONFIG = JSON.parse(s); } catch(e){}
+
+// ============ STATE ============
+let selected = {};
+let currentTab = 'vps';
+
+// ============ RENDER ============
+function rp(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+
+function renderList(listId, items, section, gridKey) {
+  const el = document.getElementById(listId);
+  if (!el) return;
+  const countEl = document.getElementById('count-' + gridKey);
+  if (countEl) countEl.textContent = items.length + ' paket';
+  el.innerHTML = items.map((item, i) => `
+    <div class="pcard" id="pc-${gridKey}-${i}" onclick="selectCard('${section}','${gridKey}',${i})">
+      <div class="pcard-top">
+        <div>
+          <div class="pcard-badge ${item.badgeType||''}">${item.badge||''}</div>
+          <div class="pcard-name">${item.name}</div>
+        </div>
+        <div class="pcard-price">${rp(item.price)}<br><small>/${item.period}</small></div>
+      </div>
+      <div class="pcard-specs">
+        ${(item.specs||[]).map(s=>`<div class="pcard-spec-item">${s}</div>`).join('')}
+      </div>
+      <button class="pcard-select-btn">✓ Pilih Paket Ini</button>
+    </div>
+  `).join('');
+}
+
+function renderAll() {
+  renderList('list-vpslegal', CONFIG.menus.vps_legal, 'vps', 'vpslegal');
+  renderList('list-vpstrial', CONFIG.menus.vps_trial, 'vps', 'vpstrial');
+  renderList('list-panel', CONFIG.menus.panel, 'panel', 'panel');
+  renderList('list-sc', CONFIG.menus.sc, 'sc', 'sc');
+  renderList('list-apk', CONFIG.menus.apk, 'apk', 'apk');
+  refreshDana();
+}
+
+// ============ SELECT ============
+function selectCard(section, gridKey, idx) {
+  // toggle
+  if (selected[section] && selected[section].gridKey === gridKey && selected[section].idx === idx) {
+    // deselect
+    document.getElementById(`pc-${gridKey}-${idx}`).classList.remove('active');
+    selected[section] = null;
+    document.getElementById(`drawer-${section}`).classList.remove('open');
+    return;
+  }
+
+  // deselect previous in same section
+  document.querySelectorAll('.pcard').forEach(c => c.classList.remove('active'));
+  document.getElementById(`pc-${gridKey}-${idx}`).classList.add('active');
+
+  let items;
+  if (gridKey === 'vpslegal') items = CONFIG.menus.vps_legal;
+  else if (gridKey === 'vpstrial') items = CONFIG.menus.vps_trial;
+  else items = CONFIG.menus[gridKey] || CONFIG.menus[section];
+
+  const item = items[idx];
+  selected[section] = { item, gridKey, idx };
+
+  // Update chips
+  document.getElementById(`chip-${section}-name`).textContent = item.name;
+  document.getElementById(`chip-${section}-price`).textContent = rp(item.price);
+  document.getElementById(`pay-${section}-total`).textContent = rp(item.price);
+
+  // Open drawer
+  document.querySelectorAll('.order-drawer').forEach(d => d.classList.remove('open'));
+  document.getElementById(`drawer-${section}`).classList.add('open');
+
+  refreshDanaSection(section);
+
+  setTimeout(() => {
+    document.getElementById(`drawer-${section}`).scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }, 80);
+}
+
+// ============ DANA ============
+function refreshDana() { ['vps','panel','sc','apk'].forEach(refreshDanaSection); }
+
+function refreshDanaSection(s) {
+  const numEl = document.getElementById(`dana-${s}-num`);
+  const nameEl = document.getElementById(`dana-${s}-name`);
+  const qrWrap = document.getElementById(`qr-${s}-wrap`);
+  if (numEl) numEl.textContent = CONFIG.dana_number || '-';
+  if (nameEl) nameEl.textContent = 'a.n. ' + (CONFIG.dana_name || '-');
+  if (qrWrap) {
+    if (CONFIG.qr_url) {
+      qrWrap.innerHTML = `<img src="${CONFIG.qr_url}" class="qr-img" style="margin:0 auto 8px;display:block;" onerror="this.style.display='none'">`;
+    } else {
+      qrWrap.innerHTML = `<div class="qr-empty">QR belum<br>diset admin</div>`;
+    }
+  }
+}
+
+// ============ TABS ============
+function switchTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + tab).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('success-screen').classList.remove('open');
+}
+
+function switchVps(type, el) {
+  document.querySelectorAll('.subtab').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('vps-legal-wrap').style.display = type==='legal' ? 'block' : 'none';
+  document.getElementById('vps-trial-wrap').style.display = type==='trial' ? 'block' : 'none';
+}
+
+// ============ SUBMIT ============
+function submitOrder(section) {
+  if (!selected[section]) { showToast('⚠️ Pilih produk dulu!'); return; }
+  const name = document.getElementById(`${section}-name`)?.value.trim();
+  const tele = document.getElementById(`${section}-tele`)?.value.trim();
+  const wa = document.getElementById(`${section}-wa`)?.value.trim();
+  if (!name || !tele || !wa) { showToast('⚠️ Isi semua data dulu!'); return; }
+
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const ss = document.getElementById('success-screen');
+  ss.style.display = 'block';
+  ss.classList.add('open');
+  showToast('✅ Order berhasil dikirim!');
+}
+
+function resetAll() {
+  document.getElementById('success-screen').classList.remove('open');
+  document.getElementById('success-screen').style.display = 'none';
+  document.getElementById('sec-vps').classList.add('active');
+  document.querySelector('.tab').classList.add('active');
+  document.querySelectorAll('.pcard').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.order-drawer').forEach(d => d.classList.remove('open'));
+  selected = {};
+}
+
+// ============ COPY ============
+function copyDana() {
+  navigator.clipboard.writeText(CONFIG.dana_number||'').then(() => showToast('✅ Nomor berhasil dicopy!')).catch(() => showToast('📋 ' + CONFIG.dana_number));
+}
+
+// ============ TOAST ============
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============ PROTECTION ============
+(function(){
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', e => {
+    if (e.key==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(e.key))||(e.ctrlKey&&e.key==='U')) e.preventDefault();
+  });
+  let clicks=0,last=Date.now();
+  document.addEventListener('click',()=>{
+    const now=Date.now();
+    if(now-last<800) clicks++; else {clicks=0;last=now;}
+    if(clicks>25){document.body.style.pointerEvents='none';setTimeout(()=>{document.body.style.pointerEvents='';clicks=0;},4000);}
+  });
+})();
+
+// ============ INIT ============
+renderAll();
+</script>
+</body>
+</html>
